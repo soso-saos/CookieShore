@@ -5,7 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Réservation - CookiesStoreMad</title>
   <style>
-    /* Vos styles CSS ici */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #ff6f61;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      color: #ff6f61;
+      text-align: center;
+    }
+    .produits-selectionnes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .produit {
+      text-align: center;
+    }
+    .produit img {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    form label {
+      margin-top: 10px;
+    }
+    form input, form textarea {
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    form button {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #e55b4f;
+    }
+    #confirmation {
+      display: none;
+      margin-top: 20px;
+      color: green;
+      text-align: center;
+    }
   </style>
   <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script type="text/javascript">
@@ -63,35 +136,4 @@
         const div = document.createElement('div');
         div.classList.add('produit');
         div.innerHTML = `<img src="${imagePath}" alt="${produit.produit} - ${produit.saveur}">`;
-        produitsContainer.appendChild(div);
-      });
-    }
-
-    // Gestion du formulaire de réservation
-    document.getElementById('reservationForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nom = document.getElementById('nom').value;
-      const email = document.getElementById('email').value;
-      const telephone = document.getElementById('telephone').value;
-      const quantite = document.getElementById('quantite').value;
-      const message = document.getElementById('message').value;
-
-      emailjs.send("service_7xtpexj", "template_izsur1x", {
-        nom: nom,
-        email: email,
-        telephone: telephone,
-        quantite: quantite,
-        message: message
-      })
-      .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-        document.getElementById('reservationForm').style.display = 'none';
-        document.getElementById('confirmation').style.display = 'block';
-        localStorage.removeItem('selection'); // Efface la sélection après soumission
-      }, function(error) {
-        console.log('FAILED...', error);
-      });
-    });
-  </script>
-</body>
-</html>
+        produitsContainer.appendChild
