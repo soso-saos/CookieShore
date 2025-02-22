@@ -108,14 +108,19 @@
 
       btn.value = 'Envoi...';
 
+      console.log('Envoi en cours...');
+
       const serviceID = 'default_service';
       const templateID = 'template_iv7t31a';
 
       emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
+          console.log('Email envoyé avec succès');
           btn.value = 'Envoyer l'email';
           document.getElementById('confirmation').style.display = 'block'; // Affiche la confirmation
+          alert('Envoyé !');
         }, (err) => {
+          console.error('Erreur lors de l\'envoi de l\'email :', err);
           btn.value = 'Envoyer l'email';
           alert(JSON.stringify(err));
         });
