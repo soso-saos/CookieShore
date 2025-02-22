@@ -104,14 +104,13 @@
         const saveur = this.getAttribute('data-saveur');
 
         if (this.classList.contains('selected')) {
-          // Désélectionner
           this.classList.remove('selected');
           selection = selection.filter(item => !(item.produit === produit && item.saveur === saveur));
         } else {
-          // Ajouter au panier
           this.classList.add('selected');
           selection.push({ produit, saveur });
         }
+        console.log(selection);
       });
     });
 
