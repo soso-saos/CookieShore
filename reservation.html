@@ -57,9 +57,12 @@
       text-align: center;
     }
   </style>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Inclure la bibliothèque EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
   <script type="text/javascript">
-    emailjs.init('g4HTytQL092Xue3Ar'); // Remplacez par votre user ID
+    (function() {
+      emailjs.init('g4HTytQL092Xue3Ar'); // Remplacez par votre user ID
+    })();
   </script>
 </head>
 <body>
@@ -100,6 +103,7 @@
       Merci pour votre réservation ! Nous vous contacterons prochainement.
     </div>
   </div>
+  <!-- Script principal pour l'envoi de l'email -->
   <script>
     const btn = document.getElementById('button');
 
@@ -116,12 +120,12 @@
       emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
           console.log('Email envoyé avec succès');
-          btn.value = 'Envoyer l'email';
+          btn.value = 'Envoyer l\'email';
           document.getElementById('confirmation').style.display = 'block'; // Affiche la confirmation
           alert('Envoyé !');
         }, (err) => {
           console.error('Erreur lors de l\'envoi de l\'email :', err);
-          btn.value = 'Envoyer l'email';
+          btn.value = 'Envoyer l\'email';
           alert(JSON.stringify(err));
         });
     });
