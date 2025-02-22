@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Réservation - CookiesStoreMad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #ff6f61;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      color: #ff6f61;
+      text-align: center;
+    }
+    .produits-selectionnes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .produit {
+      text-align: center;
+    }
+    .produit img {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    form label {
+      margin-top: 10px;
+    }
+    form input, form textarea {
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    form button {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #e55b4f;
+    }
+    #confirmation {
+      display: none;
+      margin-top: 20px;
+      color: green;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CookiesStoreMad</h1>
+    <p>Réservez vos produits</p>
+  </header>
+
+  <div class="container">
+    <h2>Vos Produits Sélectionnés</h2>
+    <div class="produits-selectionnes" id="produitsSelectionnes">
+      <!-- Les images des produits choisis seront injectées ici -->
+       
+    </div>
+
+    <h3>Formulaire de Réservation</h3>
+    <form id="reservationForm">
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="nom" required>
+
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="telephone">Téléphone :</label>
+      <input type="tel" id="telephone" name="telephone" required>
+
+      <label for="quantite">Quantité :</label>
+      <input type="number" id="quantite" name="quantite" min="1" required>
+
+      <label for="message">Message (optionnel) :</label>
+      <textarea id="message" name="message" rows="4" placeholder="Exemple : sans noix, etc."></textarea>
+
+      <button type="submit">Réserver</button>
+    </form>
+    <div id="confirmation">
+      Merci pour votre réservation ! Nous vous contacterons prochainement.
+    </div>
+  </div>
+
+  <script>
+    // Vérifier si le localStorage contient bien les données
+    const selection = JSON.parse(localStorage.getItem('selection')) || [];
+    const produitsContainer = document.getElementById('produitsSelectionnes');
+
+    if (selection.length === 0) {
+      produitsContainer.innerHTML = "<p>Aucun produit sélectionné.</p>";
+    } else {
+      selection.forEach(produit => {
+        // Vérification des valeurs
+        console.log("Produit chargé :", produit);
+
+        // Construire correctement le chemin des images
+        const imagePath = `images/${produit.produit.toLowerCase()}.${produit.saveur.toLowerCase().replace(/\s+/g, '')}.jpg`;
+
+        const div = document.createElement('div');
+        div.classList.add('produit');
+        div.innerHTML = `<img src="${imagePath}" alt="${produit.produit} - ${produit.saveur}">`;
+        produitsContainer.appendChild(div);
+      });
+    }
+
+    // Gestion du formulaire de réservation
+    document.getElementById('reservationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
+      localStorage.removeItem('selection'); // Efface la sélection après soumission
+    });
+  </script>
+
+</body>
+</html>
