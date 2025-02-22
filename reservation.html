@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Réservation - CookiesStoreMad</title>
+  <title>Formulaire de Réservation - CookiesStoreMad</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,128 +12,105 @@
       padding: 0;
       color: #333;
     }
-    header {
-      background-color: #ff6f61;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
     .container {
       width: 90%;
-      max-width: 900px;
+      max-width: 600px;
       margin: 20px auto;
       background-color: #fff;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h2, h3 {
+    h2 {
       color: #ff6f61;
       text-align: center;
     }
-    .produits-selectionnes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 30px;
+    .field {
+      margin-bottom: 10px;
     }
-    .produit {
-      text-align: center;
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: #777;
     }
-    .produit img {
-      width: 150px;
-      height: 150px;
-      border-radius: 8px;
-      object-fit: cover;
+    .field input {
+      display: block;
+      min-width: 250px;
+      line-height: 1.5;
+      font-size: 14px;
     }
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-    form label {
-      margin-top: 10px;
-    }
-    form input, form textarea {
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1em;
-    }
-    form button {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #ff6f61;
+    input[type="submit"] {
+      display: block;
+      padding: 6px 30px;
+      font-size: 14px;
+      background-color: #4460AA;
       color: #fff;
       border: none;
-      border-radius: 4px;
-      font-size: 1em;
       cursor: pointer;
     }
-    form button:hover {
-      background-color: #e55b4f;
-    }
-    #confirmation {
-      display: none;
-      margin-top: 20px;
-      color: green;
-      text-align: center;
+    input[type="submit"]:hover {
+      background-color: #354A8C;
     }
   </style>
-  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="text/javascript">
-    (function() {
-        emailjs.init("g4HTytQL092Xue3Ar"); // Remplacez par votre user ID
-    })();
+    emailjs.init('g4HTytQL092Xue3Ar');
   </script>
 </head>
 <body>
-  <header>
-    <h1>CookiesStoreMad</h1>
-    <p>Réservez vos produits</p>
-  </header>
-
   <div class="container">
-    <h2>Vos Produits Sélectionnés</h2>
-    <div class="produits-selectionnes" id="produitsSelectionnes">
-      <!-- Les images des produits choisis seront injectées ici -->
-    </div>
-
-    <h3>Formulaire de Réservation</h3>
-    <form id="reservationForm">
-      <label for="nom">Nom :</label>
-      <input type="text" id="nom" name="nom" required>
-
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="telephone">Téléphone :</label>
-      <input type="tel" id="telephone" name="telephone" required>
-
-      <label for="quantite">Quantité :</label>
-      <input type="number" id="quantite" name="quantite" min="1" required>
-
-      <label for="message">Message (optionnel) :</label>
-      <textarea id="message" name="message" rows="4" placeholder="Exemple : sans noix, etc."></textarea>
-
-      <button type="submit">Réserver</button>
+    <h2>Formulaire de Réservation</h2>
+    <form id="form">
+      <div class="field">
+        <label for="from_name">From Name</label>
+        <input type="text" name="from_name" id="from_name">
+      </div>
+      <div class="field">
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" id="nom">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email">
+      </div>
+      <div class="field">
+        <label for="telephone">Téléphone</label>
+        <input type="text" name="telephone" id="telephone">
+      </div>
+      <div class="field">
+        <label for="quantite">Quantité</label>
+        <input type="text" name="quantite" id="quantite">
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <input type="text" name="message" id="message">
+      </div>
+      <div class="field">
+        <label for="reply_to">Reply To</label>
+        <input type="text" name="reply_to" id="reply_to">
+      </div>
+      <input type="submit" id="button" value="Envoyer l'email">
     </form>
-    <div id="confirmation">
-      Merci pour votre réservation ! Nous vous contacterons prochainement.
-    </div>
   </div>
-
   <script>
-    // Vérifiez si le localStorage contient les données
-    const selection = JSON.parse(localStorage.getItem('selection')) || [];
-    const produitsContainer = document.getElementById('produitsSelectionnes');
+    const btn = document.getElementById('button');
 
-    if (selection.length === 0) {
-      produitsContainer.innerHTML = "<p>Aucun produit sélectionné.</p>";
-    } else {
-      selection.forEach(produit => {
-        const imagePath = `images/${produit.produit.toLowerCase()}.${produit.saveur.toLowerCase().replace(/\s+/g, '')}.jpg`;
-        const div = document.createElement('div');
-        div.classList.add('produit');
-        div.innerHTML = `<img src="${imagePath}" alt="${produit.produit} - ${produit.saveur}">`;
-        produitsContainer.appendChild
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      btn.value = 'Envoi...';
+
+      const serviceID = 'default_service';
+      const templateID = 'template_iv7t31a';
+
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.value = 'Envoyer l'email';
+          alert('Envoyé!');
+        }, (err) => {
+          btn.value = 'Envoyer l'email';
+          alert(JSON.stringify(err));
+        });
+    });
+  </script>
+</body>
+</html>
