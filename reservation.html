@@ -50,10 +50,16 @@
     input[type="submit"]:hover {
       background-color: #354A8C;
     }
+    #confirmation {
+      display: none;
+      margin-top: 20px;
+      color: green;
+      text-align: center;
+    }
   </style>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="text/javascript">
-    emailjs.init('g4HTytQL092Xue3Ar');
+    emailjs.init('g4HTytQL092Xue3Ar'); // Remplacez par votre user ID
   </script>
 </head>
 <body>
@@ -90,6 +96,9 @@
       </div>
       <input type="submit" id="button" value="Envoyer l'email">
     </form>
+    <div id="confirmation">
+      Merci pour votre réservation ! Nous vous contacterons prochainement.
+    </div>
   </div>
   <script>
     const btn = document.getElementById('button');
@@ -105,7 +114,7 @@
       emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
           btn.value = 'Envoyer l'email';
-          alert('Envoyé!');
+          document.getElementById('confirmation').style.display = 'block'; // Affiche la confirmation
         }, (err) => {
           btn.value = 'Envoyer l'email';
           alert(JSON.stringify(err));
