@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 2</title>
+    <style>
+        /* Polices de caractères */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            line-height: 1.6;
+            background: url('repete.jpg') repeat -110px -100px;
+        }
+
+        header {
+            background-color: transparent;
+            padding: 20px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(212, 175, 55, 0.1);
+        }
+
+        header img {
+            height: 60px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: transparent;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: #ffffff;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background-color: #ffffff;
+            width: 0;
+            transition: width 0.3s ease;
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            background-image: url('villa.jpg');
+            filter: blur(5px);
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            z-index: 2;
+            color: #ffffff;
+        }
+
+        .container {
+            padding: 40px 20px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #000000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 15px;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .col {
+            width: 300px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .col.selected {
+            border: 2px solid #d4af37;
+        }
+
+        .col img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .col h3 {
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .col p {
+            font-size: 14px;
+        }
+
+        .btn-continue {
+            display: inline-block;
+            background-color: #f0c14b;
+            color: #000;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-continue:hover {
+            background-color: #d19b33;
+        }
+
+        .cart {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            width: 80%;
+            max-width: 600px;
+            background-color: #000;
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1001;
+        }
+
+        .cart h2 {
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+
+        .cart ul {
+            list-style: none;
+            padding: 0;
+            color: #ffffff;
+        }
+
+        .cart ul li {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart ul li button {
+            background-color: transparent;
+            color: #d4af37;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .cart ul li button:hover {
+            color: #ffffff;
+        }
+
+        .cart button {
+            background-color: #d4af37;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart button:hover {
+            background-color: #ffffff;
+        }
+
+        /* Media Queries pour rendre le site responsive */
+        @media (max-width: 768px) {
+            header img {
+                height: 50px;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .container {
+                padding: 20px 10px;
+            }
+            .video {
+                margin: 20px 0;
+            }
+            .publicite, .testimonials, .contact-form {
+                padding: 20px;
+                margin: 20px 0;
+            }
+            nav a {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header img {
+                height: 40px;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            nav a {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Logo de l'entreprise">
+    </header>
+    <nav>
+        <a href="test.html" class="underline-hover">Accueil</a>
+        <a href="service.html" class="underline-hover">Services</a>
+        <a href="#apropos" class="underline-hover">À propos</a>
+        <a href="#contact" class="underline-hover">Contact</a>
+        <a href="#login" class="underline-hover">Connexion</a>
+    </nav>
+    <section class="hero">
+        <h1>Bienvenue sur nos biens</h1>
+    </section>
+    <div class="container">
+        <h2>Sélection de biens</h2>
+        <div class="row">
+            <!-- Vignette 1 -->
+            <div class="col option" data-produit="Villa" data-saveur="Saint-Tropez">
+                <img src="https://photo.barnes-international.com/annonces/bms/103/min/webp/7ec782d11f43f61f3649bb64c21c8990_346d5f9f36_1920-original.webp" alt="Villa Saint-Tropez">
+                <div style="padding: 15px;">
+                    <h3>Villa Saint-Tropez</h3>
+                    <p>5 chambres | 250 m²</p>
+                    <a href="https://www.barnes-international.com/fr/vente/france/saint-tropez-83990/5480961" style="text-decoration: none; color: #333; font-weight: bold;">Découvrir ce bien</a>
+                </div>
+            </div>
+
+            <!-- Vignette 2 -->
+            <div class="col option" data-produit="Maison" data-saveur="Vallauris">
+                <img src="https://photo.barnes-international.com/annonces/bms/17/min/webp/79f3d94eadcc382ad0ef17314608b70d_98d15f0848_1920-original.webp" alt="Maison Vallauris">
+                <div style="padding: 15px;">
+                    <h3>Maison Vallauris</h3>
+                    <p>296 m²</p>
+                    <a href="https://www.barnes-international.com/fr/vente/france/vallauris-06220/85465950" style="text-decoration: none; color: #333; font-weight: bold;">Découvrir ce bien</a>
+                </div>
+            </div>
+
+            <!-- Vignette 3 -->
+            <div class="col option" data-produit="Maison" data-saveur="Cassis">
+                <img src="https://photo.barnes-international.com/annonces/bms/56/min/webp/a995af09b1449bd03a741ae1fdfa79f1_da8f51ba0f_1920-original.webp" alt="Maison Cassis">
+                <div style="padding: 15px;">
+                    <h3>Maison Cassis</h3>
+                    <p>3 chambres | 160 m²</p>
+                    <a href="https://www.barnes-international.com/fr/vente/france/cassis-13260/85068539" style="text-decoration: none; color: #333; font-weight: bold;">Découvrir ce bien</a>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn-continue" id="btnContinue">Continuer</a>
+    </div>
+
+    <div class="cart" id="cart">
+        <h2>Votre Sélection</h2>
+        <ul id="cartItems"></ul>
+        <button id="btnCloseCart">Fermer</button>
+    </div>
+
+    <footer>
+        <p>Chef d'entreprise: John Doe</p>
+    </footer>
+
+    <script>
+        const options = document.querySelectorAll('.option');
+        let selection = JSON.parse(localStorage.getItem('selection')) || [];
+
+        // Initialiser l'interface utilisateur avec les éléments sélectionnés
+        selection.forEach(item => {
+            options.forEach(option => {
+                if (option.getAttribute('data-produit') === item.produit && option.getAttribute('data-saveur') === item.saveur) {
+                    option.classList.add('selected');
+                }
+            });
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', function() {
+                const produit = this.getAttribute('data-produit');
+                const saveur = this.getAttribute('data-saveur');
+
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    selection = selection.filter(item => !(item.produit === produit && item.saveur === saveur));
+                } else {
+                    this.classList.add('selected');
+                    selection.push({ produit, saveur });
+                }
+                localStorage.setItem('selection', JSON.stringify(selection));
+                console.log(selection);
+            });
+        });
+
+        document.getElementById('btnContinue').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (selection.length === 0) {
+                alert('Veuillez sélectionner au moins un bien.');
+                return;
+            }
+
+            const cart = document.getElementById('cart');
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            selection.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${item.produit} - ${item.saveur}`;
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '&times;';
+                removeBtn.addEventListener('click', function() {
+                    selection.splice(index, 1);
+                    localStorage.setItem('selection', JSON.stringify(selection));
+                    li.remove();
+                    options.forEach(option => {
+                        if (option.getAttribute('data-produit') === item.produit && option.getAttribute('data-saveur') === item.saveur) {
+                            option.classList.remove('selected');
+                        }
+                    });
+                });
+                li.appendChild(removeBtn);
+                cartItems.appendChild(li);
+            });
+
+            cart.style.display = 'block';
+        });
+
+        document.getElementById('btnCloseCart').addEventListener('click', function() {
+            document.getElementById('cart').style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
